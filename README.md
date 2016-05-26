@@ -1,13 +1,16 @@
 # validation
 
 ### How to use:
+
         edtNotBlankRequired = (EditText) findViewById(R.id.edt_name);
         edtEmailRequired = (EditText) findViewById(R.id.edt_email);
         edtPhoneRequired = (EditText) findViewById(R.id.edt_phone);
         edtNumberRequired = (EditText) findViewById(R.id.edt_number);
         edtLengthRequired = (EditText) findViewById(R.id.edt_text_length);
         edtInDateRangeRequired = (EditText) findViewById(R.id.edt_future);
-  And validate:
+        
+And validate:
+
         VerifierBuilder builder = new VerifierBuilder();
         builder.registerVerifier(new RequiredVerifier(edtNotBlankRequired, "Your name"));
         builder.registerVerifier(new EmailVerifier(edtEmailRequired, "Email"));
@@ -21,7 +24,8 @@
             Toast.makeText(this, "Validate success!", Toast.LENGTH_LONG).show();
         }
         
-  ### Download:
+### Download:
+
   You can checkout this repository or download JAR here:
   https://drive.google.com/file/d/0B-djf-eA7_LRUk5ObGNGcmRRdnM/view?usp=sharing
   
