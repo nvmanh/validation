@@ -1,0 +1,91 @@
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+
+android {
+    lintOptions {
+        abortOnError false
+        xmlReport true
+        htmlReport false
+        lintConfig file("${project.rootDir}/config/lint/lint.xml")
+    }
+}
+
+findbugs {
+    sourceSets = []
+    ignoreFailures = true
+}
+
+task checkstyle(type: Checkstyle) {
+    description 'Run Checkstyle'
+    group 'checkci'
+
+    ignoreFailures = true
+    showViolations = true
+    configFile file("${project.rootDir}/config/checkstyle/google_checks.xml")
+    configProperties.checkstyleSuppressionsPath = file("${project.rootDir}/config/checkstyle/suppressions.xml")
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    classpath = files()
+
+    reports {
+        xml.enabled = true
+        html.enabled = false
+    }
+}
+
+task findbugs(type: FindBugs) {
+    description 'Run Findbugs'
+    group 'checkci'
+
+    ignoreFailures = true
+    effort = "max"
+    reportLevel = "high"
+    excludeFilter = file("${project.rootDir}/config/findbugs/exclude.xml")
+
+    source = fileTree('src/main/java')
+    classes = files("${project.buildDir}/intermediates/classes")
+    classpath = files()
+
+    reports {
+        xml.enabled = true
+        html.enabled = false
+        xml {
+            destination "${project.buildDir}/reports/findbugs/findbugs.xml"
+        }
+    }
+}
+
+task pmd(type: Pmd) {
+    description 'Run Pmd'
+    group 'checkci'
+
+    ignoreFailures = true
+    ruleSetFiles = files("${project.rootDir}/config/pmd/ruleset.xml")
+
+    source 'src/main/java'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml.enabled = true
+        html.enabled = false
+        xml {
+            destination "${project.buildDir}/reports/pmd/pmd.xml"
+        }
+    }
+}
+
+task checkci {
+    description 'Run Check CI'
+    group 'checkci'
+
+    println "Please check reports in http://ci-pro.framgia.vn"
+}
+
+checkci.dependsOn 'checkstyle', 'findbugs', 'pmd', 'lint'
+
+dependencies {
+    checkstyle 'com.puppycrawl.tools:checkstyle:6.15'
+}
