@@ -11,7 +11,9 @@ import com.manhnv.validation.utils.DateTimeUtil;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 public class VerifyActivity extends Activity {
     @Override
@@ -23,6 +25,17 @@ public class VerifyActivity extends Activity {
         EditText edtNumberRequired = new EditText(this);
         EditText edtLengthRequired = new EditText(this);
         EditText edtInDateRangeRequired = new EditText(this);
+        LinearLayout layout = new LinearLayout(this);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(edtNotBlankRequired);
+        layout.addView(edtEmailRequired);
+        layout.addView(edtPhoneRequired);
+        layout.addView(edtNumberRequired);
+        layout.addView(edtLengthRequired);
+        layout.addView(edtInDateRangeRequired);
+        setContentView(layout);
         VerifierBuilder builder = new VerifierBuilder();
         builder.registerVerifier(new RequiredVerifier(edtNotBlankRequired, "Your name"));
         builder.registerVerifier(new EmailVerifier(edtEmailRequired, "Email"));
@@ -30,7 +43,7 @@ public class VerifyActivity extends Activity {
         builder.registerVerifier(new NumberVerifier(edtNumberRequired, "Your ID card no."));
         builder.registerVerifier(new LengthVerifier(edtLengthRequired, "Address", 4, 300));
         builder.registerVerifier(new DateRangeVerifier(edtInDateRangeRequired, "Register date",
-            DateTimeUtil.COMMON_DATE_FORMAT, "05/20/2016", "05/20/2017"));
+                DateTimeUtil.COMMON_DATE_FORMAT, "05/20/2016", "05/20/2017"));
         boolean validate = builder.verify();
         if (validate) {
             doContinue();
