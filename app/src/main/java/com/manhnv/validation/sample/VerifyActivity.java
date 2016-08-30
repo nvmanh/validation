@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class VerifyActivity extends Activity {
     @Override
@@ -51,5 +52,6 @@ public class VerifyActivity extends Activity {
     }
 
     private void doContinue() {
+        Toast.makeText(this, "Verified!", Toast.LENGTH_SHORT).show();
     }
 }
