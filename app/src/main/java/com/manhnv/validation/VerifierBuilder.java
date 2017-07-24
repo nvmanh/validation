@@ -5,7 +5,7 @@ import java.util.List;
 
 public class VerifierBuilder {
     List<IVerifier> verifiers;
-    IVerifier inValide;
+    IVerifier inValid;
 
     public VerifierBuilder() {
         verifiers = new ArrayList<IVerifier>();
@@ -35,11 +35,11 @@ public class VerifierBuilder {
             verifier.hideError();
             if (!verifier.verify()) {
                 verifier.showError();
-                inValide = verifier;
+                inValid = verifier;
                 return false;
             }
         }
-        inValide = null;
+        inValid = null;
         return true;
     }
 
@@ -49,9 +49,9 @@ public class VerifierBuilder {
      * @return error message
      */
     public String getErrorMessage() {
-        if (inValide == null)
+        if (inValid == null)
             return null;
-        return inValide.getErrorMessage();
+        return inValid.getErrorMessage();
     }
 
     /**
@@ -60,8 +60,8 @@ public class VerifierBuilder {
      * @return code
      */
     public int getErrorCode() {
-        if (inValide == null)
+        if (inValid == null)
             return -1;
-        return inValide.getErrorCode();
+        return inValid.getErrorCode();
     }
 }
