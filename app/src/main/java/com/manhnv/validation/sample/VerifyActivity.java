@@ -53,5 +53,6 @@ public class VerifyActivity extends Activity {
 
     private void doContinue() {
         Toast.makeText(this, "Verified!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
     }
 }
