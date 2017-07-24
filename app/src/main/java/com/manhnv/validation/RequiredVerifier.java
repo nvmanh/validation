@@ -1,10 +1,9 @@
 package com.manhnv.validation;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.text.TextUtils;
 import android.widget.TextView;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RequiredVerifier implements IVerifier {
     private TextView field;
@@ -29,9 +28,9 @@ public class RequiredVerifier implements IVerifier {
             setErrorCode(SUCCESS_CODE);
             return true;
         }
-        boolean isValidate = getText().toString().trim().length() != 0;
+        boolean isValidate = !TextUtils.isEmpty(getText().toString().trim());
         if (!isValidate) {
-            errorCode = ERROR_CODE_REQUIRED;
+            setErrorCode(ERROR_CODE_REQUIRED);
         } else {
             setErrorCode(SUCCESS_CODE);
         }
@@ -41,7 +40,7 @@ public class RequiredVerifier implements IVerifier {
     @Override
     public String getErrorMessage() {
         return !TextUtils.isEmpty(userDefinedMessage) ? userDefinedMessage
-            : getErrorMessage(getErrorCode());
+                : getErrorMessage(getErrorCode());
     }
 
     public String getErrorMessage(int error) {
